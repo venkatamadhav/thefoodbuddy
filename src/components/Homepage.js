@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
-import { useState , useEffect} from 'react'
+import { useState } from 'react'
 
 const Homepage = () => {
   const [SearchValue, setSearchValue] = useState("");
-  const [MealData, setMealData] = useState();
-  
+  const [MealData, setMealData] = useState([]);
+  const [SearchPerformed, setSearchPerformed] = useState(false);
+
   const Searchmeal = (e) => {
     setSearchValue(e.target.value.toLowerCase());
     console.log(SearchValue)
@@ -17,7 +18,8 @@ const Homepage = () => {
         const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${SearchValue}`);
         const MealData = await res.json();
         console.log(MealData.meals);
-        setMealData(MealData.meals);
+        setMealData(MealData.meals || []);
+        setSearchPerformed(true);
       } catch (err) {
         console.log(err);
       }
@@ -32,17 +34,16 @@ const Homepage = () => {
         <button onClick={SearchMeal}>Search Meal</button>
       </div>
       <div className="home-meals">
-        { MealData ? (
-          MealData.map((meal) => (
-          <div className='Meals-grid' key={meal.idMeal}>
-            <img src={meal.strMealThumb} alt="Meal"/>
-            <h4>{meal.strMeal}</h4>
-          </div>
-        ))
-        ) : (
+        {SearchPerformed && MealData.length === 0 ? (
           <h2>No Meals Found!! Please try again</h2>
-        )
-        }
+        ) : (
+          MealData.map((meal) => (
+            <div className="Meals-grid" key={meal.idMeal}>
+              <img src={meal.strMealThumb} alt="Meal" />
+              <h4>{meal.strMeal}</h4>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )
