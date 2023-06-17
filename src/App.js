@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Homepage from "./components/Homepage";
 import Categories from "./components/Categories";
 import Randommeal from "./components/Randommeal";
+import Meals from "./components/Meals";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/categories" element={<Categories/>}/>
         <Route path="/randommeal" element={<Randommeal/>}/>
+        <Route path="/meals/:id" element={<Meals />} />
       </Routes>
       <Footer />
     </div>

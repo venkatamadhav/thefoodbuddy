@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const Homepage = () => {
   const [DishesByLetter, setDishesByLetter] = useState([]);
   const [CurrentPage, setCurrentPage] = useState(1);
+  const [input, setInput] = useState("");
+  const [searchResults , setSearchResults] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -24,7 +27,24 @@ const Homepage = () => {
   }
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
+  useEffect(() => {
+    if (DishesByLetter) {
+      const filteredResults = DishesByLetter.filter((dishes) => {
+          return (
+            (dishes.strMeal.toLowerCase().includes(input))
+          );
+      });
+      console.log("Running Search")
+      setSearchResults(filteredResults);
+    }
+  }, [DishesByLetter, input]);
+  
+  const inputchange = (e) => {
+    const inputvalue = e.target.value.toLowerCase();
+    console.log(inputvalue);
+    setInput(inputvalue);
+  }
   const itemsperpage = 20;
   const previous=()=>{
     setCurrentPage(prevpage=>{return prevpage-1})
@@ -34,26 +54,31 @@ const Homepage = () => {
   }
   const startIndex = (CurrentPage-1) * itemsperpage;
   const endIndex = startIndex + itemsperpage;
-  const displayedItems = DishesByLetter.slice(startIndex, endIndex);
+  const displayedItems = searchResults.slice(startIndex, endIndex);
   document.title = `Pokemon`;
-  const totalPages = Math.ceil(DishesByLetter.length / itemsperpage);
+  const totalPages = Math.ceil(searchResults.length / itemsperpage);
   
   return (
     <div className="Home">
       <div className="home-search">
-          <input type="text" placeholder='Enter a Meal Name'/>
-          <button>Search Meal</button>
+          <input type="text" placeholder='Search your Meal here' onChange={inputchange} value={input}/>
       </div>
       <div className="dishes-container">
-        {displayedItems.length === 0 ? (
-          <h2>Loading!!</h2>
+      {displayedItems.length === 0 && input !== "" ? (
+          <h2>No Items Found!!</h2>
         ) : (
-          displayedItems.map((meal) => (
-              <div className="Meals-grid" key={meal.idMeal}>
+           displayedItems.length === 0 ? (
+            <h2>Loading!!</h2>
+          ) : (
+          displayedItems.map((meal, index) => (
+            <Link to={`/meals/${meal.idMeal}`}>
+              <div className="Meals-grid" key={startIndex + index}>
                 <img src={meal.strMealThumb} alt="Meal" />
                 <h4>{meal.strMeal}</h4>
               </div>
+            </Link>
             ))
+            )
         )}
       </div>
       <div className="buttons">
