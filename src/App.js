@@ -6,6 +6,7 @@ import Homepage from "./components/Homepage";
 import Categories from "./components/Categories";
 import Randommeal from "./components/Randommeal";
 import Meals from "./components/Meals";
+import IndividualCategory from "./components/IndividualCategory";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/categories" element={<Categories/>}/>
         <Route path="/randommeal" element={<Randommeal/>}/>
         <Route path="/meals/:id" element={<Meals />} />
+        <Route path="/category/:id" element={<IndividualCategory />} />
       </Routes>
       <Footer />
     </div>

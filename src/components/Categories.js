@@ -1,4 +1,5 @@
 import React, { useEffect , useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const Categories = () => {
   const [MealData, setMealData] = useState([]);
@@ -24,10 +25,12 @@ const Categories = () => {
           <h2>Loading...</h2>
         ) : (
           MealData.map((meal) => (
-            <div className="categories-grid" key={meal.idCategory}>
-              <img src={meal.strCategoryThumb} alt="Category" />
-              <h4>{meal.strCategory}</h4>
-            </div>
+            <Link to={`/category/${meal.strCategory}`} key={meal.idCategory}>
+              <div className="categories-grid" key={meal.idCategory}>
+                <img src={meal.strCategoryThumb} alt="Category" />
+                <h4>{meal.strCategory}</h4>
+              </div>
+            </Link>
           ))
         )}
       </div>

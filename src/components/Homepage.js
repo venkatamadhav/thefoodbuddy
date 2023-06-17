@@ -71,7 +71,7 @@ const Homepage = () => {
             <h2>Loading!!</h2>
           ) : (
           displayedItems.map((meal, index) => (
-            <Link to={`/meals/${meal.idMeal}`}>
+            <Link to={`/meals/${meal.idMeal}`} key={startIndex + index}>
               <div className="Meals-grid" key={startIndex + index}>
                 <img src={meal.strMealThumb} alt="Meal" />
                 <h4>{meal.strMeal}</h4>
