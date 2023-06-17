@@ -83,14 +83,16 @@ const Homepage = () => {
               )
           )}
       </div>
-      <div className="buttons">
+      <div className="container mx-auto flex flex-wrap justify-between pb-4">
       <button 
           onClick={previous}
           disabled={CurrentPage === 1}
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full disabled:bg-gray-700 ml-4'
           >Previous</button>
         <button 
           onClick={next}
           disabled={CurrentPage === totalPages}
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full disabled:bg-gray-700 mr-4'
           >Next
         </button>
       </div>
