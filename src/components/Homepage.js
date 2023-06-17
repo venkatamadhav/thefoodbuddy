@@ -45,7 +45,7 @@ const Homepage = () => {
     console.log(inputvalue);
     setInput(inputvalue);
   }
-  const itemsperpage = 20;
+  const itemsperpage = 24;
   const previous=()=>{
     setCurrentPage(prevpage=>{return prevpage-1})
   }
@@ -55,31 +55,33 @@ const Homepage = () => {
   const startIndex = (CurrentPage-1) * itemsperpage;
   const endIndex = startIndex + itemsperpage;
   const displayedItems = searchResults.slice(startIndex, endIndex);
-  document.title = `Pokemon`;
+  document.title = `The Food Buddy`;
   const totalPages = Math.ceil(searchResults.length / itemsperpage);
   
   return (
-    <div className="Home">
-      <div className="home-search">
-          <input type="text" placeholder='Search your Meal here' onChange={inputchange} value={input}/>
+    <div className="bg-gray-300">
+      <div className="flex justify-center p-2">
+          <input type="text" placeholder='Search your Meal here' onChange={inputchange} value={input} className='mx-8 w-full sm:w-3/4 bg-gray-100 px-6 py-2 rounded border outline-none'/>
       </div>
-      <div className="dishes-container">
-      {displayedItems.length === 0 && input !== "" ? (
-          <h2>No Items Found!!</h2>
-        ) : (
-           displayedItems.length === 0 ? (
-            <h2>Loading!!</h2>
+      <div className="flex flex-wrap justify-center mx-auto">
+        {displayedItems.length === 0 && input !== "" ? (
+            <h2>No Items Found!!</h2>
           ) : (
-          displayedItems.map((meal, index) => (
-            <Link to={`/meals/${meal.idMeal}`} key={startIndex + index}>
-              <div className="Meals-grid" key={startIndex + index}>
-                <img src={meal.strMealThumb} alt="Meal" />
-                <h4>{meal.strMeal}</h4>
+            displayedItems.length === 0 ? (
+              <h2>Loading!!</h2>
+            ) : (
+            displayedItems.map((meal, index) => (
+              <div className='p-3' key={startIndex + index}>
+                <Link to={`/meals/${meal.idMeal}`}>
+                  <div className="bg-gray-200 p-4 rounded flex justify-center items-center flex-col  h-[400px]" key={startIndex + index}>
+                    <img src={meal.strMealThumb} alt="Meal" className='h-[260px] w-[260px] sm:h-[320px] sm:w-[320px]'/>
+                    <h4 className='text-center bold text-xl w-[260px] sm:w-[320px]'>{meal.strMeal}</h4>
+                  </div>
+                </Link>
               </div>
-            </Link>
-            ))
-            )
-        )}
+              ))
+              )
+          )}
       </div>
       <div className="buttons">
       <button 
