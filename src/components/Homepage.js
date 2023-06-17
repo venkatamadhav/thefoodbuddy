@@ -1,52 +1,74 @@
-import React, { useCallback } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Homepage = () => {
-  const [SearchValue, setSearchValue] = useState("");
-  const [MealData, setMealData] = useState([]);
-  const [SearchPerformed, setSearchPerformed] = useState(false);
+  const [DishesByLetter, setDishesByLetter] = useState([]);
+  const [CurrentPage, setCurrentPage] = useState(1);
 
-  const Searchmeal = (e) => {
-    setSearchValue(e.target.value.toLowerCase());
-    console.log(SearchValue)
-  }
+  const fetchData = async () => {
+    try {
+      const alphabet = ["A", "B", "C", "D", "E", "F", "J", "I", "J", "k", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+      const dishList = [];
+      for (const letter of alphabet) {
+        const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`);
+        const data = await res.json();
+        const dishes = data.meals || [];
 
-  const SearchMeal = useCallback(() => {
-    const fetchData = async () => {
-      try {
-        console.log(SearchValue)
-        const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${SearchValue}`);
-        const MealData = await res.json();
-        console.log(MealData.meals);
-        setMealData(MealData.meals || []);
-        setSearchPerformed(true);
-      } catch (err) {
-        console.log(err);
+        if (dishes.length > 0) {
+          dishList.push(...dishes);
+        }
       }
-    };
+      setDishesByLetter(dishList);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
     fetchData();
-  }, [SearchValue]);
+  }, [])
+  const itemsperpage = 20;
+  const previous=()=>{
+    setCurrentPage(prevpage=>{return prevpage-1})
+  }
+  const next=()=>{
+    setCurrentPage(prevpage=>{return prevpage+1})
+  }
+  const startIndex = (CurrentPage-1) * itemsperpage;
+  const endIndex = startIndex + itemsperpage;
+  const displayedItems = DishesByLetter.slice(startIndex, endIndex);
+  document.title = `Pokemon`;
+  const totalPages = Math.ceil(DishesByLetter.length / itemsperpage);
   
   return (
     <div className="Home">
       <div className="home-search">
-        <input type="text" placeholder='Enter a Meal Name' value={SearchValue} onChange={Searchmeal}/>
-        <button onClick={SearchMeal}>Search Meal</button>
+          <input type="text" placeholder='Enter a Meal Name'/>
+          <button>Search Meal</button>
       </div>
-      <div className="home-meals">
-        {SearchPerformed && MealData.length === 0 ? (
-          <h2>No Meals Found!! Please try again</h2>
+      <div className="dishes-container">
+        {displayedItems.length === 0 ? (
+          <h2>Loading!!</h2>
         ) : (
-          MealData.map((meal) => (
-            <div className="Meals-grid" key={meal.idMeal}>
-              <img src={meal.strMealThumb} alt="Meal" />
-              <h4>{meal.strMeal}</h4>
-            </div>
-          ))
+          displayedItems.map((meal) => (
+              <div className="Meals-grid" key={meal.idMeal}>
+                <img src={meal.strMealThumb} alt="Meal" />
+                <h4>{meal.strMeal}</h4>
+              </div>
+            ))
         )}
       </div>
+      <div className="buttons">
+      <button 
+          onClick={previous}
+          disabled={CurrentPage === 1}
+          >Previous</button>
+        <button 
+          onClick={next}
+          disabled={CurrentPage === totalPages}
+          >Next
+        </button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Homepage
