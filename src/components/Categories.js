@@ -19,18 +19,20 @@ const Categories = () => {
   }, []);
   
   return (
-    <div className="Categories">
-      <div className="categories-types">
+    <div className="bg-gray-300">
+      <div className="flex flex-wrap justify-center mx-auto">
         {MealData.length === 0 ? (
           <h2>Loading...</h2>
         ) : (
           MealData.map((meal) => (
-            <Link to={`/category/${meal.strCategory}`} key={meal.idCategory}>
-              <div className="categories-grid" key={meal.idCategory}>
-                <img src={meal.strCategoryThumb} alt="Category" />
-                <h4>{meal.strCategory}</h4>
-              </div>
-            </Link>
+            <div  key={meal.idCategory} className='p-4'>
+              <Link to={`/category/${meal.strCategory}`}>
+                <div className="bg-gray-200 p-4 rounded flex justify-center items-center flex-col" key={meal.idCategory}>
+                  <img src={meal.strCategoryThumb} alt="Category" className='h-[220px] w-[260px] sm:h-[260px] sm:w-[300px] p-2' />
+                  <h4 className='text-center bold text-2xl '>{meal.strCategory}</h4>
+                </div>
+              </Link>
+            </div>
           ))
         )}
       </div>
