@@ -35,7 +35,6 @@ const Homepage = () => {
             (dishes.strMeal.toLowerCase().includes(input))
           );
       });
-      console.log("Running Search")
       setSearchResults(filteredResults);
     }
   }, [DishesByLetter, input]);
@@ -55,7 +54,6 @@ const Homepage = () => {
   const startIndex = (CurrentPage-1) * itemsperpage;
   const endIndex = startIndex + itemsperpage;
   const displayedItems = searchResults.slice(startIndex, endIndex);
-  document.title = `The Food Buddy`;
   const totalPages = Math.ceil(searchResults.length / itemsperpage);
   
   return (

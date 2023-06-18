@@ -17,7 +17,7 @@ const Categories = () => {
     };
     fetchData();
   }, []);
-  
+  document.title = `The Food Buddy - Categories`;
   return (
     <div className="bg-gray-300">
       <div className="flex flex-wrap justify-center mx-auto">
