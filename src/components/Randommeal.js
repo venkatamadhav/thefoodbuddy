@@ -61,47 +61,55 @@ const Randommeal = () => {
     Goat: "#964B00"
   };
   return (
-    <div className='Random Meal'>
+    <div className='bg-gray-300'>
     { MealData ? 
        ( <>
-          <div>
-            <button onClick={fetchData}>Generate Random Meal</button>
+          <div className='text-center md:text-right pt-2 md:pr-2'>
+            <button onClick={fetchData} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>Generate Random Meal</button>
           </div>
-          <div className="name">
+          <div className="text-center md:text-3xl">
             <h1>{MealData.strMeal}</h1>
           </div>
           <div className="flex justify-center m-2">
             <h3 className='text-white font-semibold mr-2 px-4 rounded capitalize'style={{backgroundColor:styles[MealData.strArea]}}>{MealData.strArea}</h3>
             <h3 className='text-white font-semibold mr-2 px-4 rounded capitalize' style={{backgroundColor:styles[MealData.strCategory]}}>{MealData.strCategory}</h3>
           </div>
-          <div className="meal-photo">
-            <img src={MealData.strMealThumb} alt="" />
-          </div>
-          <div className="instructions">
-            <p>{MealData.strInstructions}</p>
-          </div>
-          <div className="ingredients">
-            <h3>Ingredients:</h3>
-            <ul>
-            {Object.entries(MealData).map(([key, value]) => {
-              if (key.startsWith('strIngredient') && value) {
-                const ingredientNumber = key.replace('strIngredient', '');
-                const measureKey = `strMeasure${ingredientNumber}`;
-                const measureValue = MealData[measureKey];
-                return (
-                  <li key={key}>
-                    {`${value} - ${measureValue}`}
-                  </li>
-                );
-              }
-              return null;
-            })}
-            </ul>
+          <div className='flex flex-col md:flex-row md:mb-4'>
+            <div className="flex-1 flex justify-center">
+              <img src={MealData.strMealThumb} alt="" className='rounded w-[90%]'/>
+            </div>
+            <div className='flex-1'>
+              <div className='m-4 md:m-0'>
+                <h3 className='font-bold'>Instructions:</h3>
+                <p className='text-justify md:mr-6'>{MealData.strInstructions}</p>
+              </div>
+              <div className="m-4 md:mt-4">
+                <h3 className='font-bold'>Ingredients:</h3>
+                <ul>
+                {Object.entries(MealData).map(([key, value]) => {
+                  if (key.startsWith('strIngredient') && value) {
+                    const ingredientNumber = key.replace('strIngredient', '');
+                    const measureKey = `strMeasure${ingredientNumber}`;
+                    const measureValue = MealData[measureKey];
+                    return (
+                      <li key={key} className='mr-2 capitalize'>
+                        {`${ingredientNumber}. ${value} - ${measureValue}`}
+                      </li>
+                    );
+                  }
+                  return null;
+                })}
+                </ul>
+              </div>
+            </div>
           </div>
           {MealData.strYoutube && (
-            <div className="youtube-video">
+          <div className='flex flex-col items-center'>
+           <h2 className='font-extrabold'>Preparation Video:</h2>
+           <div className="m-4">
               <YouTube videoId={new URL(MealData.strYoutube).searchParams.get("v")} />
             </div>
+          </div>
           )}
        </>
        ) : (

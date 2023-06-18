@@ -81,7 +81,7 @@ const Meals = () => {
             <h3 className='text-white font-semibold mr-2 px-4 rounded capitalize'style={{backgroundColor:styles[MealData.strArea]}}>{MealData.strArea}</h3>
             <h3 className='text-white font-semibold mr-2 px-4 rounded capitalize' style={{backgroundColor:styles[MealData.strCategory]}}>{MealData.strCategory}</h3>
           </div>
-          <div className='flex flex-col md:flex-row'>
+          <div className='flex flex-col md:flex-row md:mb-4'>
             <div className="flex-1 flex justify-center">
               <img src={MealData.strMealThumb} alt="" className='rounded w-[90%]'/>
             </div>
@@ -90,9 +90,9 @@ const Meals = () => {
                 <h3 className='font-bold'>Instructions:</h3>
                 <p className='text-justify md:mr-6'>{MealData.strInstructions}</p>
               </div>
-              <div className="m-4 md:mt-4" id="ingredients">
-                <h3 className='font-bold' id='ingredients-1'>Ingredients:</h3>
-                <ul id='ingredients-2'>
+              <div className="m-4 md:mt-4">
+                <h3 className='font-bold'>Ingredients:</h3>
+                <ul>
                 {Object.entries(MealData).map(([key, value]) => {
                   if (key.startsWith('strIngredient') && value) {
                     const ingredientNumber = key.replace('strIngredient', '');
@@ -110,14 +110,14 @@ const Meals = () => {
               </div>
             </div>
           </div>
-          <div className='md:mt-8 flex flex-col items-center'>
+          {MealData.strYoutube && (
+          <div className='flex flex-col items-center'>
            <h2 className='font-extrabold'>Preparation Video:</h2>
-            {MealData.strYoutube && (
-              <div className="m-4">
-                <YouTube videoId={new URL(MealData.strYoutube).searchParams.get("v")} />
-              </div>
-            )}
+           <div className="m-4">
+              <YouTube videoId={new URL(MealData.strYoutube).searchParams.get("v")} />
+            </div>
           </div>
+          )}
        </>
        ) : (
         <p>Loading...</p>
