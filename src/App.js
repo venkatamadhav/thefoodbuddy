@@ -10,7 +10,7 @@ import IndividualCategory from "./components/IndividualCategory";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App min-h-screen flex flex-col">
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
