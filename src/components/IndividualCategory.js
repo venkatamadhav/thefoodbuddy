@@ -55,7 +55,7 @@ const IndividualCategory = () => {
   return (
     <div className="bg-gray-300">
         <div className="flex justify-center p-2">
-          <input type="text" placeholder='Search your Meal here' onChange={inputchange} value={input} className='mx-8 w-full sm:w-3/4 bg-gray-100 px-6 py-2 rounded border outline-none focus:ring-2 focus:ring-blue-500'/>
+          <input type="text" placeholder='Search your Meal here' onChange={inputchange} value={input} className='mx-8 w-full sm:w-3/4 bg-gray-100 px-6 py-2 rounded border border-gray-900 outline-none focus:ring-2 focus:ring-blue-500'/>
         </div>
       <div className="flex flex-wrap justify-center mx-auto">
         {displayedItems.length === 0 && input !== "" ? (
