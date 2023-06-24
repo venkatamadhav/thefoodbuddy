@@ -13,7 +13,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="bg-black text-white flex justify-between items-center w-full h-16 sticky top-0">
+    <div className="bg-black text-white flex justify-between items-center w-full h-16 sticky top-0 z-20">
       <Link to="/">
         <div className="ml-4">
           {/* <h1>The Food <span className='text-orange-300'>Buddy</span></h1> */}

@@ -40,7 +40,7 @@ const Categories = () => {
           MealData.map((meal) => (
             <div  key={meal.idCategory} className='p-4'>
               <Link to={`/category/${meal.strCategory}`}>
-                <div className="bg-gray-200 p-4 rounded flex justify-center items-center flex-col" key={meal.idCategory}>
+                <div className="bg-gray-200 p-4 rounded flex justify-center items-center flex-col hover:scale-105 transition duration-300 z-10" key={meal.idCategory}>
                   <img src={meal.strCategoryThumb} alt="Category" className='h-[220px] w-[260px] sm:h-[260px] sm:w-[300px] p-2' />
                   <h4 className='text-center bold text-2xl '>{meal.strCategory}</h4>
                 </div>

@@ -55,7 +55,50 @@ const Homepage = () => {
   const endIndex = startIndex + itemsperpage;
   const displayedItems = searchResults.slice(startIndex, endIndex);
   const totalPages = Math.ceil(searchResults.length / itemsperpage);
-  
+  const styles = {
+    American: "#BF0A30",
+    British: "#012169",
+    Canadian: "#FF0000",
+    Chinese: "#FFDE00",
+    Croatian: "#0B3D91",
+    Dutch: "#AE1C28",
+    Egyptian: "#E2001A", 
+    Filipino: "#0038A8",
+    French: "#002395",
+    Greek: "#0000FF",
+    Indian: "#FF9933",
+    Irish: "#169B62",
+    Italian: "#008C45",
+    Jamaican: "#FFBF00",
+    Japanese: "#BC002D",
+    Kenyan: "#006600",
+    Malaysian: "#CC0000",
+    Mexican: "#006847",
+    Moroccan: "#CE1126",
+    Polish: "#DC143",
+    Portuguese: "#006600",
+    Russian: "#0039A6",
+    Spanish: "#F1BF00",
+    Thai: "#FF0000",
+    Tunisian: "#E70013",
+    Turkish: "#E30A17",
+    Unknown: "#23C4ED",
+    Vietnamese: "#FFC72C",
+    Beef: "#8B0000",
+    Chicken: "#FFD700",
+    Dessert: "#FF1493",
+    Lamb: "#8F9779",
+    Miscellaneous: "#808080",
+    Pasta: "#FFA500",
+    Pork: "#FF6347",
+    Seafood: "#1E90FF",
+    Side: "#7CFC00",
+    Starter: "#FF4500",
+    Vegan: "#008000",
+    Vegetarian: "#228B22",
+    Breakfast: "#FFD700",
+    Goat: "#964B00"
+  };
   return (
     <div className="bg-gray-300 min-h-screen">
       <div className="flex justify-center p-2">
@@ -84,9 +127,13 @@ const Homepage = () => {
             displayedItems.map((meal, index) => (
               <div className='p-3' key={startIndex + index}>
                 <Link to={`/meals/${meal.idMeal}`}>
-                  <div className="bg-gray-200 p-4 rounded flex justify-center items-center flex-col  h-[400px]" key={startIndex + index}>
+                  <div className="bg-gray-200 p-4 rounded flex justify-center items-center flex-col  h-[440px] hover:scale-105 transition duration-300 z-10" key={startIndex + index}>
                     <img src={meal.strMealThumb} alt="Meal" className='h-[260px] w-[260px] sm:h-[320px] sm:w-[320px]'/>
                     <h4 className='text-center bold text-xl w-[260px] sm:w-[320px]'>{meal.strMeal}</h4>
+                    <div className="flex justify-center m-2">
+                      <h3 className='text-white font-semibold mr-2 px-4 rounded capitalize' style={{backgroundColor:styles[meal.strArea]}}>{meal.strArea}</h3>
+                      <h3 className='text-white font-semibold mr-2 px-4 rounded capitalize' style={{backgroundColor:styles[meal.strCategory]}}>{meal.strCategory}</h3>
+                    </div>
                   </div>
                 </Link>
               </div>
