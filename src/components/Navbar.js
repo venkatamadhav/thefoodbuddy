@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Logo from "../Logo.png"
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -10,13 +10,22 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
+  const handleDocumentClick = (e) => {
+    if (e.target.closest(".navbar") === null) {
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
-    <div className="bg-black text-white flex justify-between items-center w-full h-16 sticky top-0 z-20">
+    <div className="bg-black text-white flex justify-between items-center w-full h-16 sticky top-0 z-20 navbar">
       <Link to="/">
         <div className="ml-4">
-          {/* <h1>The Food <span className='text-orange-300'>Buddy</span></h1> */}
           <img src={Logo} className="h-16" alt='logo'/>
         </div>
       </Link>
