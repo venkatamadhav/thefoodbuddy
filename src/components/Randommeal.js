@@ -3,6 +3,8 @@ import YouTube from 'react-youtube';
 
 const Randommeal = () => {
   const [MealData, setMealData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const fetchData = async () => {
     try {
       const res = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`);
@@ -60,6 +62,32 @@ const Randommeal = () => {
     Breakfast: "#FFD700",
     Goat: "#964B00"
   };
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const opts = {
+  };
+  if(windowWidth < 768){
+    opts.height = '200';
+    opts.width = '300'
+  }
+  else if (windowWidth < 992) {
+    opts.height = '360';
+    opts.width = '480';
+  } else if (windowWidth < 1440) {
+    opts.height = '390';
+    opts.width = '640';
+  }
+  else{
+    opts.height = '480';
+    opts.width = '854';
+  }
   return (
     <div className='bg-gray-300'>
     { MealData ? 
@@ -107,7 +135,7 @@ const Randommeal = () => {
           <div className='flex flex-col items-center'>
            <h2 className='font-extrabold'>Preparation Video:</h2>
            <div className="m-4">
-              <YouTube videoId={new URL(MealData.strYoutube).searchParams.get("v")} />
+              <YouTube videoId={new URL(MealData.strYoutube).searchParams.get("v")} opts={opts}/>
             </div>
           </div>
           )}
