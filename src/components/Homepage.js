@@ -32,7 +32,7 @@ const Homepage = () => {
     if (DishesByLetter) {
       const filteredResults = DishesByLetter.filter((dishes) => {
           return (
-            (dishes.strMeal.toLowerCase().includes(input))
+            (dishes.strMeal.toLowerCase().includes(input) || dishes.strArea.toLowerCase().includes(input || dishes.strCategory.toLowerCase().includes(input)))
           );
       });
       setSearchResults(filteredResults);
